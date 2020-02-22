@@ -41,7 +41,7 @@
         "think": {
             "services": [],
             "config": {
-                "topphpClientGuzzle": "config/topphpClientGuzzle.php",
+                "topphpClientHttp": "config/topphpClientHttp.php",
                 "topphpClientRedis": "config/topphpClientRedis.php",
                 "topphpClientSocket": "config/topphpClientSocket.php"
             }

@@ -13,6 +13,7 @@ use Topphp\TopphpClient\ClientDriver;
 
 class RedisClient extends ClientDriver
 {
+    /** @var \Redis|\Predis\Client */
     private $client;
     private $serializePrefix = "";
     private $coroutine = false;// 是否开启协程redis
@@ -233,7 +234,7 @@ class RedisClient extends ClientDriver
     /**
      * 返回客户端句柄对象，可执行其它高级方法
      * @param string $type 客户端名称
-     * @return object
+     * @return \Redis|\Predis\Client
      * @author bai
      */
     public function handler($type = "redis")

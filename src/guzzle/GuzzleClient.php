@@ -14,7 +14,7 @@ use Topphp\TopphpClient\ClientDriver;
 
 class GuzzleClient extends ClientDriver
 {
-
+    /** @var Client */
     private $client;
     private $baseUri;
     private $coroutine = false;// 是否开启协程
@@ -73,19 +73,30 @@ class GuzzleClient extends ClientDriver
     }
 
     /**
-     * 返回数据与http请求状态
+     * 返回原始数据
      *
-     * @param array $data
-     * @param int $httpCode
+     * @param $response
      * @return array
      * @author bai
      */
-    private static function returnData($data = [], $httpCode = 200)
+    private function returnData($response)
     {
-        return [
-            "StatusCode" => $httpCode,
-            "Data"       => $data
-        ];
+        //获取响应状态码 如 200
+        $response_code = $response->getStatusCode();
+        //校验返回值编码类型并编码为utf-8
+        $type          = $response->getHeader('content-type');
+        $parsed        = \GuzzleHttp\Psr7\parse_header($type);
+        $original_body = (string)$response->getBody()->getContents();
+        $utf8_body     = mb_convert_encoding($original_body, 'UTF-8', $parsed[0]['charset'] ?? 'UTF-8');
+        if (self::isJsonStr($utf8_body)) {
+            $ret = \GuzzleHttp\json_decode($utf8_body, true);
+        } else {
+            $ret = $utf8_body;
+        }
+        if (is_string($ret) && $this->config['filter_html'] === true) {
+            $ret = htmlspecialchars($ret);
+        }
+        return $ret;
     }
 
     /**
@@ -118,10 +129,10 @@ class GuzzleClient extends ClientDriver
     /**
      * 返回客户端句柄对象，可执行其它高级方法
      * @param string $type 客户端名称
-     * @return object
+     * @return \GuzzleHttp\Client
      * @author bai
      */
-    public function handler($type = "guzzle")
+    public function handler($type = "http")
     {
         return $this->client;
     }
@@ -145,23 +156,7 @@ class GuzzleClient extends ClientDriver
                 "headers" => $headers
             ];
             $response = $client->get($api, $data);
-            //$response_headers = $response->getHeaders();//获取响应头信息
-            $response_code = $response->getStatusCode();//获取响应状态码 如 200
-            //$response_phrase = $response->getReasonPhrase();//获取响应 原因短语（reason phrase）如 OK
-            //校验返回值编码类型并编码为utf-8
-            $type          = $response->getHeader('content-type');
-            $parsed        = \GuzzleHttp\Psr7\parse_header($type);
-            $original_body = (string)$response->getBody()->getContents();
-            $utf8_body     = mb_convert_encoding($original_body, 'UTF-8', $parsed[0]['charset'] ?? 'UTF-8');
-            if (self::isJsonStr($utf8_body)) {
-                $ret = \GuzzleHttp\json_decode($utf8_body, true);
-            } else {
-                $ret = $utf8_body;
-            }
-            if (is_string($ret) && $this->config['filter_html'] === true) {
-                $ret = htmlspecialchars($ret);
-            }
-            return self::returnData($ret, $response_code);
+            return self::returnData($response);
         } catch (\Exception $e) {
             if (is_array($e->getMessage())) {
                 $err = json_encode($e->getMessage());
@@ -237,23 +232,7 @@ class GuzzleClient extends ClientDriver
             ];
 
             $response = $client->post($api, $data);
-            //$response_headers = $response->getHeaders();//获取响应头信息
-            $response_code = $response->getStatusCode();//获取响应状态码 如 200
-            //$response_phrase = $response->getReasonPhrase();//获取响应 原因短语（reason phrase）如 OK
-            //校验返回值编码类型并编码为utf-8
-            $type          = $response->getHeader('content-type');
-            $parsed        = \GuzzleHttp\Psr7\parse_header($type);
-            $original_body = (string)$response->getBody()->getContents();
-            $utf8_body     = mb_convert_encoding($original_body, 'UTF-8', $parsed[0]['charset'] ?? 'UTF-8');
-            if (self::isJsonStr($utf8_body)) {
-                $ret = \GuzzleHttp\json_decode($utf8_body, true);
-            } else {
-                $ret = $utf8_body;
-            }
-            if (is_string($ret) && $this->config['filter_html'] === true) {
-                $ret = htmlspecialchars($ret);
-            }
-            return self::returnData($ret, $response_code);
+            return self::returnData($response);
         } catch (\Exception $e) {
             if (is_array($e->getMessage())) {
                 $err = json_encode($e->getMessage());
@@ -290,23 +269,7 @@ class GuzzleClient extends ClientDriver
                 'form_params' => $put_data,
             ];
             $response = $client->put($api, $data);
-            //$response_headers = $response->getHeaders();//获取响应头信息
-            $response_code = $response->getStatusCode();//获取响应状态码 如 200
-            //$response_phrase = $response->getReasonPhrase();//获取响应 原因短语（reason phrase）如 OK
-            //校验返回值编码类型并编码为utf-8
-            $type          = $response->getHeader('content-type');
-            $parsed        = \GuzzleHttp\Psr7\parse_header($type);
-            $original_body = (string)$response->getBody()->getContents();
-            $utf8_body     = mb_convert_encoding($original_body, 'UTF-8', $parsed[0]['charset'] ?? 'UTF-8');
-            if (self::isJsonStr($utf8_body)) {
-                $ret = \GuzzleHttp\json_decode($utf8_body, true);
-            } else {
-                $ret = $utf8_body;
-            }
-            if (is_string($ret) && $this->config['filter_html'] === true) {
-                $ret = htmlspecialchars($ret);
-            }
-            return self::returnData($ret, $response_code);
+            return self::returnData($response);
         } catch (\Exception $e) {
             if (is_array($e->getMessage())) {
                 $err = json_encode($e->getMessage());
@@ -343,23 +306,7 @@ class GuzzleClient extends ClientDriver
                 'form_params' => $del_data,
             ];
             $response = $client->delete($api, $data);
-            //$response_headers = $response->getHeaders();//获取响应头信息
-            $response_code = $response->getStatusCode();//获取响应状态码 如 200
-            //$response_phrase = $response->getReasonPhrase();//获取响应 原因短语（reason phrase）如 OK
-            //校验返回值编码类型并编码为utf-8
-            $type          = $response->getHeader('content-type');
-            $parsed        = \GuzzleHttp\Psr7\parse_header($type);
-            $original_body = (string)$response->getBody()->getContents();
-            $utf8_body     = mb_convert_encoding($original_body, 'UTF-8', $parsed[0]['charset'] ?? 'UTF-8');
-            if (self::isJsonStr($utf8_body)) {
-                $ret = \GuzzleHttp\json_decode($utf8_body, true);
-            } else {
-                $ret = $utf8_body;
-            }
-            if (is_string($ret) && $this->config['filter_html'] === true) {
-                $ret = htmlspecialchars($ret);
-            }
-            return self::returnData($ret, $response_code);
+            return self::returnData($response);
         } catch (\Exception $e) {
             if (is_array($e->getMessage())) {
                 $err = json_encode($e->getMessage());
@@ -396,23 +343,7 @@ class GuzzleClient extends ClientDriver
                 'form_params' => $patch_data,
             ];
             $response = $client->patch($api, $data);
-            //$response_headers = $response->getHeaders();//获取响应头信息
-            $response_code = $response->getStatusCode();//获取响应状态码 如 200
-            //$response_phrase = $response->getReasonPhrase();//获取响应 原因短语（reason phrase）如 OK
-            //校验返回值编码类型并编码为utf-8
-            $type          = $response->getHeader('content-type');
-            $parsed        = \GuzzleHttp\Psr7\parse_header($type);
-            $original_body = (string)$response->getBody()->getContents();
-            $utf8_body     = mb_convert_encoding($original_body, 'UTF-8', $parsed[0]['charset'] ?? 'UTF-8');
-            if (self::isJsonStr($utf8_body)) {
-                $ret = \GuzzleHttp\json_decode($utf8_body, true);
-            } else {
-                $ret = $utf8_body;
-            }
-            if (is_string($ret) && $this->config['filter_html'] === true) {
-                $ret = htmlspecialchars($ret);
-            }
-            return self::returnData($ret, $response_code);
+            return self::returnData($response);
         } catch (\Exception $e) {
             if (is_array($e->getMessage())) {
                 $err = json_encode($e->getMessage());

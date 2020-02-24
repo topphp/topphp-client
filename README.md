@@ -9,7 +9,7 @@
 ## 包含方法
 
  - Http客户端请求 GET POST PUT PATCH DELETE
- - Redis客户端 普通set get存取，list存取，哈希存取等
+ - Redis客户端 普通set get存取，list存取，哈希存取等 
 
 ## 组件结构
 
@@ -24,16 +24,8 @@ vendor/
 
 ## 安装
 
-开发组件使用组件脚手架安装
-
 ``` bash
-    composer create-project topphp/component-builder=dev-master 你的组件名称
-```
-
-骨架安装组件
-
-``` bash
-    composer require 组件名称=dev-master
+    composer require topphp/topphp-client
 ```
 
 ## 用法

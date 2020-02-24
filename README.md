@@ -24,8 +24,6 @@ vendor/
 
 ## 安装
 
-安装组件
-
 ``` bash
     composer require topphp/topphp-client
 ```

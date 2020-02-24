@@ -24,16 +24,10 @@ vendor/
 
 ## 安装
 
-开发组件使用组件脚手架安装
+安装组件
 
 ``` bash
-    composer create-project topphp/component-builder=dev-master 你的组件名称
-```
-
-骨架安装组件
-
-``` bash
-    composer require 组件名称=dev-master
+    composer require topphp/topphp-client
 ```
 
 ## 用法

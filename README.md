@@ -9,7 +9,7 @@
 ## 包含方法
 
  - Http客户端请求 GET POST PUT PATCH DELETE
- - Redis客户端 普通set get存取，list存取，哈希存取等
+ - Redis客户端 普通set get存取，list存取，哈希存取等 
 
 ## 组件结构
 

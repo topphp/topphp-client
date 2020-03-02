@@ -69,7 +69,7 @@ class GuzzleClient extends ClientDriver
      */
     private static function isJsonStr($str)
     {
-        return !is_null(json_decode($str));
+        return is_string($str) && !is_null(json_decode($str));
     }
 
     /**

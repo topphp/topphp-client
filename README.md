@@ -50,7 +50,35 @@ vendor/
         3、组价同时也提供直接暴露客户端对象句柄的方式直接调用原生客户端对象，完成更多高级操作
             Client::getInstance()->cli("redis")->handler()->publish( $channel, $message );
             RedisHelper::handler()->publish( $channel, $message );
-        4、默认的助手类已经提供了大部分常用场景所需的方法，更多用法可以参看单元测试文件和对应的官方文档
+        4、关于获取配置优先级顺序
+            A.Client::getInstance($config)// 优先获取手动传入的配置（助手类不适用）
+            B.非手动传入配置的（配置不传，传空或者使用助手类），优先根据指定客户端获取独立配置文件topphpClientHttp、topphpClientRedis、topphpClientSocket中的配置
+            C.没有配置独立配置文件的Redis客户端会自动获取Cache配置中的redis配置
+            D.都没有的，会提示配置错误
+        5、独立配置文件示例：
+            Http：暂无需配置，保持默认即可，swoole环境自动提供协程的http客户端
+            Socket：敬请期待...
+            Redis：swoole环境已内部集成协程化的Redis客户端
+            
+                return [
+                    // 客户端连接方式配置
+                    'Redis' => [
+                        // 支持多库配置（默认选择default,可以通过修改默认的connect来动态切换redis配置）
+                        'default_connect' => 'default',
+                        'default'         => [
+                            // 连接地址
+                            'host'         => '127.0.0.1',
+                            // 连接密码
+                            'auth'         => '',
+                            // 端口
+                            'port'         => 6379,
+                            // 选择库
+                            'db'           => 0,
+                        ]
+                    ]
+                ];
+                
+        6、默认的助手类已经提供了大部分常用场景所需的方法，更多用法可以参看单元测试文件和对应的官方文档
 ```
 
 ## 修改日志

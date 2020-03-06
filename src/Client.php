@@ -17,9 +17,9 @@ use Topphp\TopphpClient\socket\SocketClient;
 class Client extends ClientDriver
 {
     private static $instance;// 私有化对象属性
-    private static $guzzleConfig;
-    private static $redisConfig;
-    private static $socketConfig;
+    private static $guzzleConfig = [];
+    private static $redisConfig = [];
+    private static $socketConfig = [];
     private static $type;
 
     /**
@@ -40,9 +40,23 @@ class Client extends ClientDriver
                 self::$socketConfig = $config['Socket'];
             }
         } elseif (class_exists(\think\App::class)) {
-            self::$guzzleConfig = config("topphpClientHttp.Http");
-            self::$redisConfig  = config("topphpClientRedis.Redis");
-            self::$socketConfig = config("topphpClientSocket.Socket");
+            if (!empty(config("topphpClientHttp.Http"))) {
+                self::$guzzleConfig = config("topphpClientHttp.Http");
+            }
+            if (!empty(config("topphpClientRedis.Redis"))) {
+                self::$redisConfig = config("topphpClientRedis.Redis");
+            } elseif (!empty(config("cache.stores.redis"))) {
+                $cacheRedis        = config("cache.stores.redis");
+                self::$redisConfig = [
+                    'host' => !empty($cacheRedis['host']) ? $cacheRedis['host'] : '127.0.0.1',
+                    'auth' => !empty($cacheRedis['password']) ? $cacheRedis['password'] : '',
+                    'port' => !empty($cacheRedis['port']) ? $cacheRedis['port'] : 6379,
+                    'db'   => !empty($cacheRedis['select']) ? $cacheRedis['select'] : 0,
+                ];
+            }
+            if (!empty(config("topphpClientSocket.Socket"))) {
+                self::$socketConfig = config("topphpClientSocket.Socket");
+            }
         }
     }
 

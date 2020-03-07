@@ -43,6 +43,11 @@ vendor/
         2、通过助手类直接调用【推荐】
             RedisHelper::set("arr", ["这是一个数组"], 90);
             HttpHelper::get("https://www.baidu.com");
+            $data = [
+                "field"=>"val"  
+            ];
+            // $type 类型：在header头为空的情况下，自动根据类型填充header头信息，包含（json，body，form_params，multipart，xml）
+            HttpHelper::post(string $url, array $data, string $type = 'json', array $headers = [])
     注意事项：
         1、写好对应的配置后，在骨架即可直接调用，无需传入配置，需要动态切换配置时，只需要通过骨架的config()方法动态修改即可。
         2、还提供一种直接传入配置的方式

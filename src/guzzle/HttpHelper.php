@@ -35,7 +35,7 @@ class HttpHelper
      * @return mixed
      * @author bai
      */
-    public static function get(string $url, array $data, array $headers = [])
+    public static function get(string $url, array $data = [], array $headers = [])
     {
         return Client::getInstance()->cli(self::$driver)->get($url, $data, $headers);
     }

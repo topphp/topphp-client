@@ -148,7 +148,7 @@ class GuzzleClient extends ClientDriver
      * @return array|bool
      * @author bai
      */
-    public function get($api, $param, $headers = [])
+    public function get($api, $param = [], $headers = [])
     {
         $client      = $this->client;
         $requestTime = time();

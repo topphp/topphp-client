@@ -10,7 +10,7 @@ declare(strict_types=1);
  * Class HttpHelper
  *
  * @package GuzzleClient
- * @method mixed get(string $url, array $headers = []) static 发送 GET 请求
+ * @method mixed get(string $url, array $data, array $headers = []) static 发送 GET 请求
  * @method mixed post(string $url, array $data, string $type = 'json', array $headers = []) static 发送 POST 请求
  * @method mixed put(string $url, array $data) static 发送 PUT 请求
  * @method mixed patch(string $url, array $data) static 发送 PATCH 请求
@@ -30,13 +30,14 @@ class HttpHelper
     /**
      * GET 请求
      * @param string $url
+     * @param array $data
      * @param array $headers
      * @return mixed
      * @author bai
      */
-    public static function get(string $url, array $headers = [])
+    public static function get(string $url, array $data = [], array $headers = [])
     {
-        return Client::getInstance()->cli(self::$driver)->get($url, $headers);
+        return Client::getInstance()->cli(self::$driver)->get($url, $data, $headers);
     }
 
     /**
@@ -91,7 +92,7 @@ class HttpHelper
 
     /**
      * 返回Http-Guzzle客户端句柄（可以执行其它Guzzle高级方法）
-     * @return mixed
+     * @return \GuzzleHttp\Client
      * @author bai
      */
     public static function handler()

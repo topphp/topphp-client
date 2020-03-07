@@ -143,17 +143,19 @@ class GuzzleClient extends ClientDriver
      * GET 请求
      *
      * @param $api
+     * @param $param
      * @param array $headers
      * @return array|bool
      * @author bai
      */
-    public function get($api, $headers = [])
+    public function get($api, $param = [], $headers = [])
     {
         $client      = $this->client;
         $requestTime = time();
         try {
             $data     = [
-                "headers" => $headers
+                "headers" => $headers,
+                "query"   => $param
             ];
             $response = $client->get($api, $data);
             return self::returnData($response);

@@ -391,7 +391,7 @@ class RedisHelper
 
     /**
      * 返回Redis客户端句柄（可以执行其它Redis高级方法）
-     * @return mixed
+     * @return \Redis
      * @author bai
      */
     public static function handler()

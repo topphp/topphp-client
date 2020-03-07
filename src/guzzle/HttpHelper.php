@@ -92,7 +92,7 @@ class HttpHelper
 
     /**
      * 返回Http-Guzzle客户端句柄（可以执行其它Guzzle高级方法）
-     * @return mixed
+     * @return \GuzzleHttp\Client
      * @author bai
      */
     public static function handler()

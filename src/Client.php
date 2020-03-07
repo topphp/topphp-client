@@ -115,24 +115,12 @@ class Client extends ClientDriver
             $type = strtolower(self::$type);
             switch ($type) {
                 case "http":
-                    if (empty(self::$guzzleConfig)) {
-                        self::$errorLog = "Http config error";
-                        return $obj;
-                    }
                     $obj = new GuzzleClient(self::$guzzleConfig);
                     break;
                 case "redis":
-                    if (empty(self::$redisConfig)) {
-                        self::$errorLog = "Redis config error";
-                        return $obj;
-                    }
                     $obj = new RedisClient(self::$redisConfig);
                     break;
                 case "socket":
-                    if (empty(self::$socketConfig)) {
-                        self::$errorLog = "Socket config error";
-                        return $obj;
-                    }
                     $obj = new SocketClient(self::$socketConfig);
                     break;
                 default:

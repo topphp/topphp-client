@@ -41,7 +41,11 @@
     "extra": {
         "think": {
             "services": [],
-            "config": []
+            "config": {
+                "topphpClientHttp": "config/topphpClientHttp.php",
+                "topphpClientRedis": "config/topphpClientRedis.php",
+                "topphpClientSocket": "config/topphpClientSocket.php"
+            }
         }
     },
     "config": {

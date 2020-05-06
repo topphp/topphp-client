@@ -42,9 +42,9 @@
         "think": {
             "services": [],
             "config": {
-                "topphpClientHttp": "topphpClientHttp.php",
-                "topphpClientRedis": "topphpClientRedis.php",
-                "topphpClientSocket": "topphpClientSocket.php"
+                "topphpClientHttp": "config/topphpClientHttp.php",
+                "topphpClientRedis": "config/topphpClientRedis.php",
+                "topphpClientSocket": "config/topphpClientSocket.php"
             }
         }
     },

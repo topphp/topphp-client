@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Topphp\Test;
 
-
 use Topphp\TopphpClient\Client;
 
 trait GuzzleTrait
@@ -142,6 +141,4 @@ trait GuzzleTrait
         $this->assertTrue($errorMsg === null);
         return $res;
     }
-
-
 }

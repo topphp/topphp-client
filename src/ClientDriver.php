@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Topphp\TopphpClient;
 
-
 abstract class ClientDriver
 {
     /**
@@ -45,5 +44,4 @@ abstract class ClientDriver
     {
         return call_user_func_array([$this->handler, $method], $args);
     }
-
 }

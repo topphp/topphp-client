@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Topphp\TopphpClient;
 
-
 use Topphp\TopphpClient\guzzle\GuzzleClient;
 use Topphp\TopphpClient\redis\RedisClient;
 use Topphp\TopphpClient\socket\SocketClient;

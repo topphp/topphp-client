@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Topphp\Test;
 
-
 use Topphp\TopphpClient\Client;
 
 trait RedisTrait

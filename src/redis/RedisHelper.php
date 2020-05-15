@@ -44,7 +44,6 @@ declare(strict_types=1);
 
 namespace Topphp\TopphpClient\redis;
 
-
 use Topphp\TopphpClient\Client;
 
 class RedisHelper

@@ -197,7 +197,7 @@ class GuzzleClient extends ClientDriver
         try {
             if (empty($headers)) {
                 switch ($type) {
-                    case "json" :
+                    case "json":
                         $headers = [
                             "Content-Type" => "application/json;charset=utf-8"
                         ];

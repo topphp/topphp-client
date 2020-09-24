@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": "~7.2",
-        "guzzlehttp/guzzle": "^6.5",
+        "guzzlehttp/guzzle": "^6.3",
         "predis/predis": "^1.1",
         "ext-json": "*",
         "ext-mbstring": "*",

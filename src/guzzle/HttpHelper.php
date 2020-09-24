@@ -20,7 +20,6 @@ declare(strict_types=1);
 
 namespace Topphp\TopphpClient\guzzle;
 
-
 use Topphp\TopphpClient\Client;
 
 class HttpHelper

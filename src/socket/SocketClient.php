@@ -22,12 +22,10 @@ class SocketClient extends ClientDriver
 
     public function __construct($config)
     {
-
     }
 
     protected function connect()
     {
-
     }
 
     /**
@@ -42,5 +40,4 @@ class SocketClient extends ClientDriver
     }
 
     //*************************************** --- 助手函数 --- *******************************************//
-
 }

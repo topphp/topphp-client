@@ -142,16 +142,16 @@ class RedisClient extends ClientDriver
             return false;
         }
         switch ($badions[1]) {
-            case 'a' :
-            case 'O' :
-            case 's' :
+            case 'a':
+            case 'O':
+            case 's':
                 if (preg_match("/^{$badions[1]}:[0-9]+:.*[;}]\$/s", $data)) {
                     return true;
                 }
                 break;
-            case 'b' :
-            case 'i' :
-            case 'd' :
+            case 'b':
+            case 'i':
+            case 'd':
                 if (preg_match("/^{$badions[1]}:[0-9.E-]+;\$/", $data)) {
                     return true;
                 }
@@ -179,11 +179,18 @@ class RedisClient extends ClientDriver
                 $redis = new \Redis;
 
                 if ($this->config['persistent']) {
-                    $redis->pconnect($this->config['host'], $this->config['port'],
-                        $this->config['timeout'], 'persistent_id_' . $this->config['select']);
+                    $redis->pconnect(
+                        $this->config['host'],
+                        $this->config['port'],
+                        $this->config['timeout'],
+                        'persistent_id_' . $this->config['select']
+                    );
                 } else {
-                    $redis->connect($this->config['host'], $this->config['port'],
-                        $this->config['timeout']);
+                    $redis->connect(
+                        $this->config['host'],
+                        $this->config['port'],
+                        $this->config['timeout']
+                    );
                 }
 
                 if ('' != $this->config['auth']) {
